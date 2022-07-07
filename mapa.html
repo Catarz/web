@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset=ISO-8859-1 />
+<title>GPS SinMiedo</title>
+<link rel="shortcut icon" href="NOSOTRAS-ELEMENTOS-03-300x273.png">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <style>
+    
+        
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+        
+        li {
+            float: left;
+        }
+        
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        li a {
+            background-color: #6a35af;
+        }
+        h1{
+          margin: 50px;
+      }
+      
+        </style>
+    <ul>
+        <li><a class="active" href="index.html">Inicio</a></li>
+        <li><a href="mapa.html">GPS</a></li>
+        <li><a href="contacto.html">Contactos</a></li>
+        <li><a href="loginvista.html">Iniciar Sesion</a></li>
+      </ul>
+<h1>Sin Miedo</h1>
+<center>
+<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+
+<script>
+function success(position) {
+ var status = document.querySelector('#status');
+ status.innerHTML = "Te encontramos";
+
+ var mapcanvas = document.createElement('div');
+ mapcanvas.id = 'mapcanvas';
+ mapcanvas.style.height = '400px';
+ mapcanvas.style.width = '560px';
+
+ document.querySelector('#map').appendChild(mapcanvas);
+
+ var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+ var myOptions = {
+ zoom: 15,
+ center: latlng,
+ mapTypeControl: false,
+ navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
+ mapTypeId: google.maps.MapTypeId.ROADMAP
+ };
+ var map = new google.maps.Map(document.getElementById("mapcanvas"), myOptions);
+
+ var marker = new google.maps.Marker({
+ position: latlng,
+ map: map,
+ title:"Usted está aquí."
+ });
+}
+
+function error(msg) {
+ var status = document.getElementById('status');
+ status.innerHTML= "Error [" + error.code + "]: " + error.message; 
+}
+
+if (navigator.geolocation) {
+ navigator.geolocation.getCurrentPosition(success, error,{maximumAge:60000, timeout: 4000});
+} else {
+ error('Su navegador no tiene soporte para su geolocalización');
+}
+
+</script>
+
+<p id="status">Buscando su localizacion...</p>
+<div id="map"></div>
+</center>
+
+</body>
